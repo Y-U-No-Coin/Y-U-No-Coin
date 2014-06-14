@@ -29,7 +29,7 @@ CTxMemPool mempool;
 unsigned int nTransactionsUpdated = 0;
 
 map<uint256, CBlockIndex*> mapBlockIndex;
-uint256 hashGenesisBlock("0x384b060671f4a93948e9c168216dadb0ca2fbc54aa11c86b0345b6af1c59b2f5");
+uint256 hashGenesisBlock("0xd1e2d319accc956811e12485a57d0e5066a0b7226f0f8c8144a4aacf6b00ba72");
 static CBigNum bnProofOfWorkLimit(~uint256(0) >> 20); // starting difficulty is 1 / 2^12
 CBlockIndex* pindexGenesisBlock = NULL;
 int nBestHeight = -1;
@@ -50,7 +50,7 @@ map<uint256, map<uint256, CDataStream*> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "SmallChange Signed Message:\n";
+const string strMessageMagic = "Y-U-No-Coin Signed Message:\n";
 
 double dHashesPerSec;
 int64 nHPSTimerStart;
@@ -828,7 +828,7 @@ uint256 static GetOrphanRoot(const CBlock* pblock)
 
 int64 static GetBlockValue(int nHeight, int64 nFees)
 {
-    int64 nSubsidy = 4 * COIN;
+    int64 nSubsidy = 7 * COIN;
 
 
     if(nHeight < 17280) // no block reward within the first 3 days
@@ -839,8 +839,8 @@ int64 static GetBlockValue(int nHeight, int64 nFees)
     return nSubsidy + nFees;
 }
 
-static const int64 nTargetTimespan = 0.35 * 24 * 60 * 60; // SmallChange: 0.35 days
-static const int64 nTargetSpacing = 15; // SmallChange: 15 seconds
+static const int64 nTargetTimespan = 0.35 * 24 * 60 * 60; // Y-U-No-Coin: 0.35 days
+static const int64 nTargetSpacing = 20; // Y-U-No-Coin: 20 seconds
 static const int64 nInterval = nTargetTimespan / nTargetSpacing;
 
 // Thanks: Balthazar for suggesting the following fix
@@ -1184,7 +1184,7 @@ bool CTransaction::ConnectInputs(MapPrevTx inputs,
 {
     // Take over previous transactions' spent pointers
     // fBlock is true when this is called from AcceptBlock when a new best-block is added to the blockchain
-    // fMiner is true when called from the internal smallchange miner
+    // fMiner is true when called from the internal Y-U-No-Coin miner
     // ... both are false when called from CTransaction::AcceptToMemoryPool
     if (!IsCoinBase())
     {
@@ -1931,7 +1931,7 @@ bool CheckDiskSpace(uint64 nAdditionalBytes)
         string strMessage = _("Warning: Disk space is low");
         strMiscWarning = strMessage;
         printf("*** %s\n", strMessage.c_str());
-        uiInterface.ThreadSafeMessageBox(strMessage, "SmallChange", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
+        uiInterface.ThreadSafeMessageBox(strMessage, "Y-U-No-Coin", CClientUIInterface::OK | CClientUIInterface::ICON_EXCLAMATION | CClientUIInterface::MODAL);
         StartShutdown();
         return false;
     }
@@ -2031,13 +2031,13 @@ bool LoadBlockIndex(bool fAllowNew)
         block.hashPrevBlock = 0;
         block.hashMerkleRoot = block.BuildMerkleTree();
         block.nVersion = 1;
-        block.nTime    = 1366559428;
+        block.nTime    = 1402724646;
         block.nBits    = 0x1e0ffff0;
-        block.nNonce   = 2085386442;
+        block.nNonce   = 2085778211;
 
         if (fTestNet)
         {
-            block.nTime    = 1366559428;
+            block.nTime    = 1402724646;
             block.nNonce   = 386402991;
         }
 
